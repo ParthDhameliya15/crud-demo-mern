@@ -4,7 +4,28 @@
 `XAUUSD_2Candle_BuySellEA.mq5` (v1.40) so the strategy can be evaluated
 outside MetaTrader. Pure Python 3, no third-party packages.
 
-## 1. Export bars from MT5
+## 1. Get the bars
+
+### Option A — pull them automatically (recommended)
+
+On the Windows machine running MT5:
+
+```bash
+pip install MetaTrader5
+python fetch_mt5_data.py --symbol XAUUSD --timeframe M5 --years 2
+```
+
+`fetch_mt5_data.py` connects to the running terminal, pulls the range in
+monthly chunks (one huge request tends to hit terminal limits), de-duplicates
+and writes `XAUUSD_M5.csv` in exactly the layout the backtester wants —
+including the real per-bar spread column.
+
+If the symbol name is wrong the script lists the gold symbols your broker
+actually offers (`XAUUSD.m`, `GOLD`, `XAUUSDm` … all exist in the wild).
+If you get far fewer bars than expected, open the chart, press Home, scroll
+left to force MT5 to download history, then re-run.
+
+### Option B — export by hand
 
 In MetaTrader 5: open the XAUUSD chart on the timeframe you run the EA on →
 **Tools → Options → Charts** → set *Max bars in chart* high → scroll the chart
