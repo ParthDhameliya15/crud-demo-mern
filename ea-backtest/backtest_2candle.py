@@ -242,8 +242,10 @@ def report(closed, still_open, skipped, bars, cfg):
         "=" * 62,
         "bars              : %d   (%s -> %s)" % (
             len(bars), bars[0].t, bars[-1].t) if bars else "no bars",
-        "lot %.2f | TP %.2f | maxC3 %.2f | offset %dpt | spread %dpt | comm %.2f/lot/side"
-        % (cfg.lot, cfg.tp, cfg.max_c3, cfg.offset, cfg.spread, cfg.commission),
+        "lot %.2f | TP %.2f | maxC3 %.2f | offset %dpt | spread %s | comm %.2f/lot/side"
+        % (cfg.lot, cfg.tp, cfg.max_c3, cfg.offset,
+           "per-bar from CSV" if cfg.use_csv_spread else "%dpt" % cfg.spread,
+           cfg.commission),
         "both-sides-open   : %s | ambiguous bar resolves to: %s"
         % (cfg.allow_multiple, cfg.ambiguous.upper()),
         "",
